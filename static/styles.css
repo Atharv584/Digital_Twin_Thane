@@ -1,0 +1,482 @@
+/*
+  Thane Digital Twin — White Minimalist Theme
+  Clean layout, light colors, low border-radius, no emojis
+*/
+
+/* ── Design Tokens ──────────────────────────────────────────────────────────── */
+:root {
+    --bg:             #f3f4f6; /* Light gray background */
+    
+    --card-bg:        #ffffff;
+    --card-border:    #e5e7eb;
+    
+    --text-primary:   #111827;
+    --text-secondary: #4b5563;
+    --text-dim:       #9ca3af;
+    
+    --cyan:   #0284c7;
+    --violet: #6d28d9;
+    --blue:   #2563eb;
+    --green:  #059669;
+    --amber:  #d97706;
+    --red:    #dc2626;
+    
+    --font:  'Inter', sans-serif;
+    --mono:  'JetBrains Mono', monospace;
+    
+    /* Lower roundness */
+    --radius-lg: 6px;
+    --radius-md: 4px;
+    --radius-sm: 2px;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────────────*/
+.dashboard-container {
+    max-width: 1700px; 
+    margin: 0 auto;
+    padding: 1.5rem 2rem 2rem;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────────────*/
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────────*/
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dashboard-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+.dashboard-header h1 span {
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+    font-family: var(--mono);
+}
+
+.header-meta {
+    text-align: right;
+}
+.clock {
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+.clock-date {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    margin-bottom: 0.25rem;
+}
+.status-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    color: var(--green);
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+}
+.pulse-dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+}
+
+/* ── Dashboard Grid ──────────────────────────────────────────────────────────*/
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.25rem;
+}
+
+/* Grid placements */
+.weather-card  { grid-column: span 3; }
+.aqi-card      { grid-column: span 3; }
+.pop-card      { grid-column: span 3; }
+.solar-card    { grid-column: span 3; }
+.map-card      { grid-column: span 8; grid-row: span 3; }
+.insights-card { grid-column: span 4; grid-row: span 2; }
+.news-card     { grid-column: span 4; }
+.table-card    { grid-column: span 12; }
+
+/* ── Card Header ─────────────────────────────────────────────────────────────*/
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+}
+.card-label {
+    display: flex;
+    align-items: center;
+}
+.card-label h2 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.data-tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    background: var(--bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 0.15rem 0.5rem;
+}
+
+.card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* ── Metric Hero ─────────────────────────────────────────────────────────────*/
+.metric-hero {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin-bottom: 0.2rem;
+}
+.metric-value {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -1.5px;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+.metric-hero.small .metric-value { font-size: 2.5rem; letter-spacing: -1px; }
+.metric-unit {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    align-self: flex-end;
+    margin-bottom: 0.4rem;
+}
+.metric-sub {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+/* ── Metric Grid (2×2) ───────────────────────────────────────────────────────*/
+.metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    border-top: 1px solid var(--card-border);
+    padding-top: 0.9rem;
+}
+.metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+.mi-label {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.mi-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--mono);
+    color: var(--text-primary);
+}
+
+/* ── AQI Badge ───────────────────────────────────────────────────────────────*/
+.aqi-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.6rem;
+    border: 1px solid currentColor;
+}
+.aqi-good     { color: var(--green); background: #ecfdf5; }
+.aqi-moderate { color: var(--amber); background: #fffbeb; }
+.aqi-unhealthy { color: var(--red); background: #fef2f2; }
+.aqi-hazardous { color: #9333ea; background: #faf5ff; }
+
+/* ── Solar Timeline ──────────────────────────────────────────────────────────*/
+.solar-timeline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+.solar-event {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    flex-shrink: 0;
+}
+.sol-label { font-size: 0.65rem; color: var(--text-dim); }
+.sol-val   { font-size: 0.85rem; font-weight: 600; font-family: var(--mono); color: var(--text-primary); }
+
+.solar-bar-wrap { flex: 1; }
+.solar-bar {
+    height: 4px;
+    background: var(--card-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+.solar-progress {
+    height: 100%;
+    background: var(--text-dim);
+    border-radius: var(--radius-sm);
+    width: 0%;
+    transition: width 1s ease;
+}
+
+/* ── Map ─────────────────────────────────────────────────────────────────────*/
+.map-container {
+    padding: 0;
+    margin: 0 -1.5rem -1.5rem;
+    margin-top: 0;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    overflow: hidden;
+    min-height: 480px;
+    border-top: 1px solid var(--card-border);
+}
+#map { height: 100%; width: 100%; min-height: 480px; background: #e5e7eb; }
+
+.map-controls { display: flex; gap: 0.4rem; }
+.btn {
+    background: var(--bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font);
+}
+.btn.active, .btn:hover {
+    background: var(--text-primary);
+    color: #fff;
+    border-color: var(--text-primary);
+}
+
+.icon-btn {
+    background: var(--bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: var(--font);
+}
+.icon-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+/* ── Insights ────────────────────────────────────────────────────────────────*/
+.insight-content {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 0.25rem;
+}
+.insight-content p { margin-bottom: 0.75rem; }
+.insight-content p:last-child { margin-bottom: 0; }
+
+.insight-content::-webkit-scrollbar { width: 4px; }
+.insight-content::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: var(--radius-sm); }
+
+/* ── News ────────────────────────────────────────────────────────────────────*/
+.news-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 0.25rem;
+}
+.news-list::-webkit-scrollbar { width: 4px; }
+.news-list::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: var(--radius-sm); }
+
+.news-list li {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--bg);
+}
+.news-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.news-title {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 0.2rem;
+}
+.news-title a { color: var(--text-primary); text-decoration: none; }
+.news-title a:hover { text-decoration: underline; }
+.news-meta { font-size: 0.7rem; color: var(--text-dim); font-family: var(--mono); }
+
+/* ── History Table ───────────────────────────────────────────────────────────*/
+.table-wrapper {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 340px;
+}
+.table-wrapper::-webkit-scrollbar { height: 6px; width: 6px; }
+.table-wrapper::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: var(--radius-sm); }
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+.history-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--card-bg);
+}
+.history-table th {
+    padding: 0.75rem 1rem;
+    color: var(--text-dim);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--card-border);
+}
+.history-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--bg);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+}
+.history-table tbody tr:hover td {
+    background: var(--bg);
+}
+.history-table tbody tr:last-child td { border-bottom: none; }
+.table-placeholder { text-align: center; color: var(--text-dim); padding: 2rem !important; }
+
+/* AQI coloured cells */
+.aqi-cell-good      { color: var(--green); font-weight: 500; }
+.aqi-cell-moderate  { color: var(--amber); font-weight: 500; }
+.aqi-cell-unhealthy { color: var(--red); font-weight: 500; }
+.aqi-cell-hazardous { color: #9333ea; font-weight: 500; }
+
+/* ── Loader ──────────────────────────────────────────────────────────────────*/
+.loader-text {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────────*/
+.dashboard-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0 0.5rem;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    border-top: 1px solid var(--card-border);
+    margin-top: 1.25rem;
+}
+
+/* ── Animations ──────────────────────────────────────────────────────────────*/
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+.delay-1 { animation-delay: 0s; }
+.delay-2 { animation-delay: 0.05s; }
+.delay-3 { animation-delay: 0.10s; }
+.delay-4 { animation-delay: 0.15s; }
+.delay-5 { animation-delay: 0.20s; }
+.delay-6 { animation-delay: 0.25s; }
+.delay-7 { animation-delay: 0.30s; }
+.delay-8 { animation-delay: 0.35s; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────────*/
+@media (max-width: 1200px) {
+    .weather-card, .aqi-card, .pop-card, .solar-card { grid-column: span 6; }
+    .map-card { grid-column: span 12; grid-row: span 1; }
+    .insights-card, .news-card { grid-column: span 6; grid-row: span 1; }
+}
+@media (max-width: 768px) {
+    .dashboard-container { padding: 1rem; }
+    .weather-card, .aqi-card, .pop-card, .solar-card,
+    .insights-card, .news-card { grid-column: span 12; }
+    .metric-value { font-size: 2.5rem; }
+    .dashboard-header { flex-direction: column; gap: 1rem; text-align: center; }
+    .header-meta { text-align: center; }
+    .status-indicator { justify-content: center; }
+}
+
+/* ── Leaflet Overrides ───────────────────────────────────────────────────────*/
+.leaflet-container { background: #e5e7eb; font-family: var(--font); }
+.leaflet-popup-content-wrapper {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.leaflet-popup-tip { background: var(--card-bg); }
+.leaflet-control-attribution { background: rgba(255,255,255,0.8) !important; color: var(--text-dim) !important; }
